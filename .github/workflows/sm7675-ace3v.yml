@@ -65,8 +65,8 @@ jobs:
         cd kernel/kernel_platform/common
         curl -LSs "https://raw.githubusercontent.com/rifsxd/KernelSU-Next/next/kernel/setup.sh" | bash -s next-susfs
         cd ./KernelSU-Next/
-        KSU_VERSION=$(expr $(/usr/bin/git rev-list --count HEAD) "+" 10200)
-        sed -i "s/DKSU_VERSION=11998/DKSU_VERSION=${KSU_VERSION}/" kernel/Makefile
+        # KSU_VERSION=$(expr $(/usr/bin/git rev-list --count HEAD) "+" 10200)
+        # sed -i "s/DKSU_VERSION=11998/DKSU_VERSION=${KSU_VERSION}/" kernel/Makefile
         
     - name: 添加SUSFS
       run: |
@@ -114,3 +114,9 @@ jobs:
         name: Image-KernelSU_Next-SUSFS-Ace3V
         path: kernel/kernel_platform/out/msm-kernel-pineapple-gki/dist/Image
 
+    - name: 上传至 Alist
+      if: ${{ inputs.upload_alist == true }}
+      run: |
+        git clone https://github.com/Yxiguan/Alist_API.git api
+        cp ./api/* ./
+        python3 upload.py
