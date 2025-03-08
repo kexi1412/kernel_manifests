@@ -110,5 +110,10 @@ jobs:
         name: Image-KernelSU_Next-SUSFS-Ace3
         path: kernel/kernel_platform/out/msm-kernel-kalama-gki/gki_kernel/dist/Image
 
-
+    - name: 上传至 Alist
+      if: ${{ inputs.upload_alist == true }}
+      run: |
+        git clone https://github.com/Yxiguan/Alist_API.git api
+        cp ./api/* ./
+        python3 upload.py
         
